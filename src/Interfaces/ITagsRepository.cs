@@ -6,4 +6,5 @@ public interface ITagsRepository
 {
     Task<Tag> InsertAsync(Tag tag);
     Task<IEnumerable<Tag>> FindAllByTagsAsync(string[] tags);
+    Task<IEnumerable<Tag>> FindAllByNoteId(Guid noteId);
 }

@@ -1,20 +1,27 @@
 using System.Transactions;
+using AutoMapper;
 using Smarty.Notes.Dto;
 using Smarty.Notes.Entities;
 using Smarty.Notes.Interfaces;
 
 namespace Core.Services;
 
+/// <summary>
+/// Service class for handle add/edit/remove notice
+/// </summary>
 public sealed class NotesService
 {
+    readonly IMapper _mapper;
     readonly INotesRepository _notesRepository;
     readonly ICurrentContext _currentContext;
     readonly ITagsRepository _tagsRepository;
     readonly INoteTagLinksRepository _noteTagLinksRepository;
 
     public NotesService(INotesRepository notesRepository, ITagsRepository tagsRepository,
-        INoteTagLinksRepository noteTagLinksRepository, ICurrentContext currentContext)
+        INoteTagLinksRepository noteTagLinksRepository, IMapper mapper, 
+        ICurrentContext currentContext)
     {
+        _mapper = mapper;
         _noteTagLinksRepository = noteTagLinksRepository;
         _tagsRepository = tagsRepository;
         _notesRepository = notesRepository;
@@ -22,7 +29,7 @@ public sealed class NotesService
     }
 
     /// <summary>
-    /// Метод добавляет новую заметку 
+    /// Method is added a new notice 
     /// </summary>
     public async Task<NoteDto> AddAsync(NoteDto noteDto)
     {
@@ -38,25 +45,24 @@ public sealed class NotesService
 
         transactionScope.Complete();
 
-        return Get(newNote.Id);
+        return await GetAsync(newNote.Id);
     }
 
     /// <summary>
-    /// Метод добавляет заметку в сущности 
+    /// Method is added notice 
     /// </summary>
     private async Task<Note> InsertNoteAsync(NoteDto dto)
     {
-        var newNote = new Note();
+        var newNote = _mapper.Map<Note>(dto);
 
         newNote.Created = _currentContext.GetNow();
         newNote.CreatedBy = _currentContext.GetCurrentUser().Id;
-        newNote.Content = dto.Content;
-
+     
         return await _notesRepository.InsertAsync(newNote);
     }
 
     /// <summary>
-    /// Метод добавляет теги к заметки 
+    /// Method is add tags for notice 
     /// </summary>
     private async Task InsertOrUpdateTagsAsync(Note parent, TagDto[] tags)
     {
@@ -85,18 +91,27 @@ public sealed class NotesService
                 NoteId = parent.Id,
                 TagId = existingTag.Id
             });
-        }
-
-        
+        } 
     }
 
-    public NoteDto Get(Guid id)
+    /// <summary>
+    /// Method is return constructed NoteDto by id 
+    /// </summary>
+    public async Task<NoteDto> GetAsync(Guid id)
+    {
+        var note = await _notesRepository.GetAsync(id);
+
+        var noteTags = await _tagsRepository.FindAllByNoteId(id);
+
+        return new NoteDto(){
+            Id = id,
+            Content = note.Content,
+            Tags =  noteTags.Count() == 0 ? Array.Empty<TagDto>() : _mapper.Map<TagDto[]>(noteTags?.ToArray()) 
+        };
+    }
+
+    public Task UpdateAsync(NoteDto dto)
     {
         throw new NotImplementedException();
-    }
-
-    public void Update(NoteDto note)
-    {
-        
     }
 }

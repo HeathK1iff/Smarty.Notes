@@ -53,6 +53,9 @@ public sealed class NotesService
     /// </summary>
     private async Task<Note> InsertNoteAsync(NoteDto dto)
     {
+        if (dto is  null)
+            throw new ArgumentNullException(nameof(dto));
+
         var newNote = _mapper.Map<Note>(dto);
 
         newNote.Created = _currentContext.GetNow();
@@ -66,6 +69,12 @@ public sealed class NotesService
     /// </summary>
     private async Task InsertOrUpdateTagsAsync(Note parent, TagDto[] tags)
     {
+        if (parent is  null)
+            throw new ArgumentNullException(nameof(parent));
+
+        if (tags is not {Length: > 0})
+            throw new ArgumentException(nameof(tags));
+
         var nameOfTags = tags.Select(i => i.Name).ToArray();
         var existingTags = await _tagsRepository.FindAllByTagsAsync(nameOfTags);
 

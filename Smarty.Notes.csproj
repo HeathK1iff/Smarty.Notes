@@ -16,9 +16,4 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.1" />
     <PackageReference Include="NpgSQL" Version="9.0.2" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="Smarty.NotesService.csproj" />
-  </ItemGroup>
-
 </Project>

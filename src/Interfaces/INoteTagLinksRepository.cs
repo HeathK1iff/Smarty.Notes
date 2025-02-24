@@ -4,5 +4,5 @@ namespace Smarty.Notes.Interfaces;
 
 public interface INoteTagLinksRepository
 {
-    public Task InsertAsync(NoteTagLink link);
+    Task InsertAsync(NoteTagLink link);
 }

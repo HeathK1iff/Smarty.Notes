@@ -4,7 +4,7 @@ using Smarty.Notes.Dto;
 using Smarty.Notes.Entities;
 using Smarty.Notes.Interfaces;
 
-namespace Core.Services;
+namespace Smarty.Notes.Services;
 
 /// <summary>
 /// Service class for handle add/edit/remove notice
@@ -34,9 +34,7 @@ public sealed class NotesService
     public async Task<NoteDto> AddAsync(NoteDto noteDto)
     {
         if (noteDto is null)
-        {
             throw new ArgumentNullException(nameof(noteDto));
-        }
 
         using var transactionScope = new TransactionScope();
 
@@ -110,6 +108,9 @@ public sealed class NotesService
     {
         var note = await _notesRepository.GetAsync(id);
 
+        if (note is null)
+          throw new InvalidDataException("Item not found");
+
         var noteTags = await _tagsRepository.FindAllByNoteId(id);
 
         return new NoteDto(){
@@ -119,8 +120,17 @@ public sealed class NotesService
         };
     }
 
-    public Task UpdateAsync(NoteDto dto)
+    public async Task UpdateAsync(NoteDto dto)
     {
-        throw new NotImplementedException();
+        if (dto is null)
+            throw new ArgumentNullException(nameof(dto));
+        
+        var note = await _notesRepository.GetAsync(dto.Id);
+
+        if (note is null)
+            throw new InvalidDataException("Item not found");
+
+        note.Content = dto.Content;
+
     }
 }

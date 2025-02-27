@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smarty.Notes", "Smarty.Notes.csproj", "{320E0146-9702-446B-A69B-ED53C4DBFAD9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smarty.Notes.Domain", "Smarty.Notes.Domain\Smarty.Notes.Domain.csproj", "{892B54B0-5A3C-4F9C-9A33-21783E28DCF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smarty.Notes.Infrastructure", "Smarty.Notes.Infrastructure\Smarty.Notes.Infrastructure.csproj", "{BACC00B1-545A-468A-8F6F-7C14B3E4D867}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smarty.Notes.Domain.Tests", "Smarty.Notes.Domain.Tests\Smarty.Notes.Domain.Tests.csproj", "{538D2532-CA55-462C-9C0C-92464D999D00}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,9 +18,17 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{320E0146-9702-446B-A69B-ED53C4DBFAD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{320E0146-9702-446B-A69B-ED53C4DBFAD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{320E0146-9702-446B-A69B-ED53C4DBFAD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{320E0146-9702-446B-A69B-ED53C4DBFAD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{892B54B0-5A3C-4F9C-9A33-21783E28DCF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{892B54B0-5A3C-4F9C-9A33-21783E28DCF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{892B54B0-5A3C-4F9C-9A33-21783E28DCF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{892B54B0-5A3C-4F9C-9A33-21783E28DCF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BACC00B1-545A-468A-8F6F-7C14B3E4D867}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BACC00B1-545A-468A-8F6F-7C14B3E4D867}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BACC00B1-545A-468A-8F6F-7C14B3E4D867}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BACC00B1-545A-468A-8F6F-7C14B3E4D867}.Release|Any CPU.Build.0 = Release|Any CPU
+		{538D2532-CA55-462C-9C0C-92464D999D00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{538D2532-CA55-462C-9C0C-92464D999D00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{538D2532-CA55-462C-9C0C-92464D999D00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{538D2532-CA55-462C-9C0C-92464D999D00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

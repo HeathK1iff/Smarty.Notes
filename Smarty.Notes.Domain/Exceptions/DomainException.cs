@@ -1,7 +1,8 @@
-using System.Runtime.Serialization;
-
 namespace Smarty.Notes.Domain.Exceptions;
 
+/// <summary>
+/// Base class of domain exception
+/// </summary>
 public abstract class DomainException : Exception
 {
     protected DomainException()

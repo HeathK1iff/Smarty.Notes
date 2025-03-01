@@ -1,7 +1,8 @@
-using System.Runtime.Serialization;
-
 namespace Smarty.Notes.Domain.Exceptions;
 
+/// <summary>
+/// Exception class for situation when item not found in collection
+/// </summary>
 public class NotFoundException : DomainException
 {
     public NotFoundException()

@@ -9,5 +9,5 @@ public abstract class EntityBase
     /// Uniq Id of entity
     /// </summary>
     /// <value></value>
-    public Guid Id { get; set; }
+    public required Guid Id { get; set; }
 }

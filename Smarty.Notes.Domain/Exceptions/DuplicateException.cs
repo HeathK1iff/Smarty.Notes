@@ -1,7 +1,8 @@
-using System.Runtime.Serialization;
-
 namespace Smarty.Notes.Domain.Exceptions;
 
+/// <summary>
+/// Exception class for situation when detected duplicate in collection of items
+/// </summary>
 public class DuplicateException : DomainException
 {
     public DuplicateException(): this ("Item already exist")

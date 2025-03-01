@@ -45,6 +45,8 @@ public class NoteService
                 }
             });
 
+            task.Start();
+            
             tasks.Add(task);
         });
 

@@ -24,6 +24,15 @@ public class Tags: ITags
     }
 
     /// <inheritdoc/>
+    public void Add(string[] names)
+    {
+        if (names is not {Length: > 0})
+          throw new ArgumentNullException(nameof(names));
+
+        Array.ForEach(names, name => Add(name));
+    }
+
+    /// <inheritdoc/>
     public void Remove(string name)
     {
         if (!_tags.Contains(name, defaultComparer))

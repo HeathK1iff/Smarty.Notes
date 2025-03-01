@@ -12,7 +12,7 @@ public sealed class NoteAggregate : EntityBase, IAggregateRoot
     /// </summary>
     public string Content { get; set; } = string.Empty;
 
-    public ITags Tags { get; } = new Tags();
+    public required ITags Tags { get; set; }
 
     /// <summary>
     /// Date of create of record 

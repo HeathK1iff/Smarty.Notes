@@ -10,6 +10,10 @@ public interface ITagsRepository
     /// <summary>
     /// Return list of tag for note  
     /// </summary>
+<<<<<<< HEAD
     IEnumerable<Note> GetAllForNote(Guid noteId);
+=======
+    Task<IEnumerable<Tag>> GetAsync(Guid tagId);
+>>>>>>> 9399c1e (Added changes)
 
 }

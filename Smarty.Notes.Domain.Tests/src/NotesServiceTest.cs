@@ -3,12 +3,14 @@ using System.Data.Common;
 using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework.Internal;
 using Smarty.Notes.Domain.Entities.Aggregates;
 using Smarty.Notes.Domain.Interfaces;
 using Smarty.Notes.Domain.Mappings;
 using Smarty.Notes.Domain.Services;
+using Smarty.Notes.Domain.Tests.Helpers;
 using Smarty.Notes.Entities;
 
 namespace Smarty.Notes.Domain.Tests;
@@ -29,6 +31,8 @@ public class NotesServiceTest
         Created = DateTime.Today,
         CreatedBy = Guid.NewGuid()
     };
+
+
     readonly MapperConfiguration _mapperConfiration = new(cfg =>
         {
             cfg.AddProfile<EntityMapperProfile>();
@@ -39,20 +43,30 @@ public class NotesServiceTest
         throw new NotImplementedException();
     }
 
+
+
     [TestCase]
     public async Task GetNotesForUserAsync_CheckCorrectReturn_ReturnCorrectNoteAggregate()
     {
-        var notesRepository = new Mock<INotesRepository>();
-        notesRepository.Setup(f => f.GetAllForUserAsync(It.IsAny<Guid>()))
-            .Returns((Guid id) => Task.FromResult((IEnumerable<Note>) [_noteForTest]));
-        var noteTagLinkRepository = new Mock<INoteTagLinkRepository>();
-        noteTagLinkRepository.Setup(m => m.GetAllForNoteAsync(It.IsAny<Guid>()))
-            .Returns((Guid id) => Task.FromResult(id == _noteForTest.Id ? _tagsForTest.Select(e => e.Item1) : null));
+        var notes = new List<Note> { _noteForTest };
+        var notesRepository = RepositoryHelper.CreateNotesRepositoryMock(notes);
+
+        var links = new List<RepositoryHelper.NoteLink>
+            (
+                _tagsForTest.Select(f => new RepositoryHelper.NoteLink()
+                {
+                    NoteId = _noteForTest.Id,
+                    TagId = f.Item1
+                }).ToArray()
+            );
+        var noteTagLinkRepository = RepositoryHelper.CreateNoteTagLinkRepositoryMock(links);
+        
+        
         var tagsRepository = new Mock<ITagsRepository>();
         tagsRepository
             .Setup(m => m.GetAsync(It.IsAny<Guid>()))
             .Returns((Guid id) => Task.FromResult(_tagsForTest.Select(m => new Tag() { Id = m.Item1, Name = m.Item2 })));
-        var target = new NoteService(notesRepository.Object, noteTagLinkRepository.Object,
+        var target = new NoteService(notesRepository, noteTagLinkRepository,
             tagsRepository.Object, _mapperConfiration.CreateMapper());
         var expected = JsonSerializer.Serialize(new NoteAggregate[]
         {
@@ -67,7 +81,7 @@ public class NotesServiceTest
         });
 
 
-        var actual = JsonSerializer.Serialize(await target.GetNotesForUserAsync(_noteForTest.Id));
+        var actual = JsonSerializer.Serialize(await target.GetNotesForUserAsync(_noteForTest.CreatedBy));
 
         Assert.That(actual, Is.EqualTo(expected));
 

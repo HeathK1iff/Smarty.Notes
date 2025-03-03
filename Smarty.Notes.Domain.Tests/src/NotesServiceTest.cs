@@ -62,12 +62,12 @@ public class NotesServiceTest
         var noteTagLinkRepository = RepositoryHelper.CreateNoteTagLinkRepositoryMock(links);
         
         
-        var tagsRepository = new Mock<ITagsRepository>();
-        tagsRepository
-            .Setup(m => m.GetAsync(It.IsAny<Guid>()))
-            .Returns((Guid id) => Task.FromResult(_tagsForTest.Select(m => new Tag() { Id = m.Item1, Name = m.Item2 })));
+        var tags = _tagsForTest.Select(m => new Tag() { Id = m.Item1, Name = m.Item2 }).ToList();
+        var tagsRepository =  RepositoryHelper.CreateTagsRepositoryMock(tags);
+
         var target = new NoteService(notesRepository, noteTagLinkRepository,
-            tagsRepository.Object, _mapperConfiration.CreateMapper());
+            tagsRepository, _mapperConfiration.CreateMapper());
+        
         var expected = JsonSerializer.Serialize(new NoteAggregate[]
         {
             new NoteAggregate

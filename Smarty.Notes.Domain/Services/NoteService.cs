@@ -1,4 +1,3 @@
-using System.Collections.Concurrent;
 using AutoMapper;
 using Smarty.Notes.Domain.Entities.Aggregates;
 using Smarty.Notes.Domain.Interfaces;
@@ -6,7 +5,7 @@ using Smarty.Notes.Entities;
 
 namespace Smarty.Notes.Domain.Services;
 
-public class NoteService
+public class NoteService : INoteService
 {
     readonly INoteTagLinkRepository _noteTagLinkRepository;
     readonly ITagsRepository _tagsRepository;
@@ -25,6 +24,11 @@ public class NoteService
     public async Task<IEnumerable<NoteAggregate>> GetNotesForUserAsync(Guid userId)
     {
         IEnumerable<Note> notes = await _notesRepository.GetAllForUserAsync(userId);
+
+        // if (notes is null)
+        // {
+
+        // }
 
         var result = _mapper.Map<NoteAggregate[]>(notes);
 

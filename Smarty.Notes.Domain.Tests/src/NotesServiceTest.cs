@@ -32,25 +32,22 @@ public class NotesServiceTest
         CreatedBy = Guid.NewGuid()
     };
 
+    INotesRepository _notesRepository;
+    INoteTagLinkRepository _noteTagLinkRepository;
+    ITagsRepository _tagsRepository;
+
 
     readonly MapperConfiguration _mapperConfiration = new(cfg =>
         {
             cfg.AddProfile<EntityMapperProfile>();
         });
-
-    public async Task GetNotesForUserAsync_TryToGetNotExisting_ThrowNotFoundException()
-    {
-        throw new NotImplementedException();
-    }
-
-
-
-    [TestCase]
-    public async Task GetNotesForUserAsync_CheckCorrectReturn_ReturnCorrectNoteAggregate()
+    
+    [SetUp]
+    public void Setup()
     {
         var notes = new List<Note> { _noteForTest };
-        var notesRepository = RepositoryHelper.CreateNotesRepositoryMock(notes);
-
+        _notesRepository = RepositoryHelper.CreateNotesRepositoryMock(notes);
+        
         var links = new List<RepositoryHelper.NoteLink>
             (
                 _tagsForTest.Select(f => new RepositoryHelper.NoteLink()
@@ -59,14 +56,30 @@ public class NotesServiceTest
                     TagId = f.Item1
                 }).ToArray()
             );
-        var noteTagLinkRepository = RepositoryHelper.CreateNoteTagLinkRepositoryMock(links);
-        
+        _noteTagLinkRepository = RepositoryHelper.CreateNoteTagLinkRepositoryMock(links);        
         
         var tags = _tagsForTest.Select(m => new Tag() { Id = m.Item1, Name = m.Item2 }).ToList();
-        var tagsRepository =  RepositoryHelper.CreateTagsRepositoryMock(tags);
+        _tagsRepository =  RepositoryHelper.CreateTagsRepositoryMock(tags);
+    }
 
-        var target = new NoteService(notesRepository, noteTagLinkRepository,
-            tagsRepository, _mapperConfiration.CreateMapper());
+
+    [TestCase]
+    public async Task GetNotesForUserAsync_PutIncorrectGuid_ReturnEmptyList()
+    {
+        var target = new NoteService(_notesRepository, _noteTagLinkRepository,
+            _tagsRepository, _mapperConfiration.CreateMapper());
+        
+        var expected = JsonSerializer.Serialize(new NoteAggregate[]{});
+        var actual = JsonSerializer.Serialize(await target.GetNotesForUserAsync(Guid.NewGuid()));
+
+        Assert.That(actual, Is.EqualTo(expected));
+    }
+
+    [TestCase]
+    public async Task GetNotesForUserAsync_CheckCorrectReturn_ReturnCorrectNoteAggregate()
+    {
+         var target = new NoteService(_notesRepository, _noteTagLinkRepository,
+            _tagsRepository, _mapperConfiration.CreateMapper());
         
         var expected = JsonSerializer.Serialize(new NoteAggregate[]
         {

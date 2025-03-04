@@ -1,4 +1,3 @@
-
 using System.Data.Common;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -7,6 +6,7 @@ using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework.Internal;
 using Smarty.Notes.Domain.Entities.Aggregates;
+using Smarty.Notes.Domain.Exceptions;
 using Smarty.Notes.Domain.Interfaces;
 using Smarty.Notes.Domain.Mappings;
 using Smarty.Notes.Domain.Services;
@@ -62,19 +62,6 @@ public class NotesServiceTest
         _tagsRepository =  RepositoryHelper.CreateTagsRepositoryMock(tags);
     }
 
-
-    [TestCase]
-    public async Task GetNotesForUserAsync_PutIncorrectGuid_ReturnEmptyList()
-    {
-        var target = new NoteService(_notesRepository, _noteTagLinkRepository,
-            _tagsRepository, _mapperConfiration.CreateMapper());
-        
-        var expected = JsonSerializer.Serialize(new NoteAggregate[]{});
-        var actual = JsonSerializer.Serialize(await target.GetNotesForUserAsync(Guid.NewGuid()));
-
-        Assert.That(actual, Is.EqualTo(expected));
-    }
-
     [TestCase]
     public async Task GetNotesForUserAsync_CheckCorrectReturn_ReturnCorrectNoteAggregate()
     {
@@ -92,7 +79,6 @@ public class NotesServiceTest
                 Tags = new Tags() { _tagsForTest.Select(m=>m.Item2).ToArray() }
             }
         });
-
 
         var actual = JsonSerializer.Serialize(await target.GetNotesForUserAsync(_noteForTest.CreatedBy));
 

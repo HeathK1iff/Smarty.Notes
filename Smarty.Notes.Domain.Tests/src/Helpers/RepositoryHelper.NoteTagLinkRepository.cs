@@ -5,18 +5,18 @@ namespace Smarty.Notes.Domain.Tests.Helpers;
 
 public static partial class RepositoryHelper
 {
-    public static INoteTagLinkRepository CreateNoteTagLinkRepositoryMock(List<NoteLink> storage)
+    public static INoteTagLinkRepository CreateNoteTagLinkRepositoryMock(List<NoteLink> list)
     {
         var repository = new Mock<INoteTagLinkRepository>();
 
         repository.Setup(m => m.GetAllForNoteAsync(It.IsAny<Guid>()))
-            .Returns((Guid id) => Task.FromResult(storage.Where(item => item.NoteId == id).Select(f => f.TagId)));
+            .Returns((Guid id) => Task.FromResult(list.Where(item => item.NoteId == id).Select(f => f.TagId)));
 
         repository.Setup(m => m.AddAsync(It.IsAny<Guid>(), It.IsAny<Guid>()))
             .Returns((Guid tagId, Guid noteId) =>
             {
 
-                storage.Add(new NoteLink()
+                list.Add(new NoteLink()
                 {
                     NoteId = noteId,
                     TagId = tagId
@@ -24,12 +24,16 @@ public static partial class RepositoryHelper
 
                 return Task.CompletedTask;
             });
+        
+        repository
+                .Setup(f => f.IsExistAsync(It.IsAny<Guid>(), It.IsAny<Guid>()))
+                .Returns((Guid tagId, Guid notesId) => Task.FromResult(list.Any(f => f.TagId == tagId && f.NoteId == notesId)));
 
         repository.Setup(m => m.DeleteAsync(It.IsAny<Guid>(), It.IsAny<Guid>()))
             .Returns((Guid tagId, Guid noteId) =>
             {
-                var itemForDelete = storage.FirstOrDefault(f => f.NoteId == noteId && f.TagId == tagId) ?? throw new IndexOutOfRangeException();
-                storage.Remove(itemForDelete);
+                var itemForDelete = list.FirstOrDefault(f => f.NoteId == noteId && f.TagId == tagId) ?? throw new IndexOutOfRangeException();
+                list.Remove(itemForDelete);
 
                 return Task.CompletedTask;
             });

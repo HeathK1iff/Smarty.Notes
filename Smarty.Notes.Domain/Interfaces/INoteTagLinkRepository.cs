@@ -14,13 +14,14 @@ public interface INoteTagLinkRepository
     /// <param name="tagId"></param>
     /// <param name="notesId"></param>
     /// <returns></returns>
-    /// <summary>
-    /// Provide possibility to async add link to storage
-    /// </summary>
-    /// <param name="tagId"></param>
-    /// <param name="notesId"></param>
-    /// <returns></returns>
     Task AddAsync(Guid tagId, Guid notesId);
+
+    /// <summary>
+    /// Provide possility to check item into storage
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    Task<bool> IsExistAsync(Guid tagId, Guid notesId);
     
     /// <summary>
     /// Provide possibility to async delete link
@@ -29,12 +30,6 @@ public interface INoteTagLinkRepository
     /// <param name="notesId"></param>
     /// <returns></returns>
     
-    /// <summary>
-    /// Provide possibility to async delete link
-    /// </summary>
-    /// <param name="tagId"></param>
-    /// <param name="notesId"></param>
-    /// <returns></returns>
     Task DeleteAsync(Guid tagId, Guid notesId);
 
     /// <summary>

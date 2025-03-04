@@ -12,8 +12,15 @@ public interface INotesRepository
     /// Provide possibility to async add note into storage
     /// </summary>
     /// <param name="note"></param>
-    /// <returns></returns>
+    /// <returns>Note</returns>
     Task<Note> AddAsync(Note note);
+
+    /// <summary>
+    /// Provide existing of object in storage by Guid
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>True if object is exist</returns>
+    Task<bool> IsExistAsync(Guid id); 
 
     /// <summary>
     /// Provide possibility to async delete note into storage

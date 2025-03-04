@@ -25,32 +25,22 @@ public class NoteService : INoteService
     {
         IEnumerable<Note> notes = await _notesRepository.GetAllForUserAsync(userId);
 
-        // if (notes is null)
-        // {
-
-        // }
-
         var result = _mapper.Map<NoteAggregate[]>(notes);
-
         var tasks = new List<Task>();
 
         Array.ForEach(result, item =>
         {
-
             var task = new Task(async () =>
             {
                 var linkIds = await _noteTagLinkRepository.GetAllForNoteAsync(item.Id);
-
                 foreach (var linkId in linkIds)
                 {
                     IEnumerable<Tag> tags = await _tagsRepository.GetAsync(linkId);
-
                     item.Tags = new Tags() { tags.Select(f => f.Name).ToArray() };
                 }
             });
 
             task.Start();
-            
             tasks.Add(task);
         });
 

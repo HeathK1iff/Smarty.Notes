@@ -13,7 +13,7 @@ public interface INotesRepository
     /// </summary>
     /// <param name="note"></param>
     /// <returns>Note</returns>
-    Task<Note> AddAsync(Note note);
+    Task<Guid> AddAsync(Note note);
 
     /// <summary>
     /// Provide existing of object in storage by Guid

@@ -8,14 +8,22 @@ namespace Smarty.Notes.Domain.Interfaces;
 public interface ITagsRepository
 {
     /// <summary>
-    /// Return list of tag for note  
+    /// Get tag by Id  
     /// </summary>
+    /// <param name="tagId">Id of tag</param>
+    /// <returns>Tag</returns>
     Task<Tag?> GetAsync(Guid tagId);
 
     /// <summary>
-    /// Provide existing of object in storage by Guid
+    /// Return list of tag for note 
     /// </summary>
-    /// <param name="id"></param>
-    /// <returns>True if object is exist</returns>
-    Task<bool> IsExistAsync(Guid id); 
+    /// <param name="tagName">Text of tag</param>
+    Task<Tag?> FindTagByNameAsync(string tagName);
+
+    /// <summary>
+    /// Add a new tag
+    /// </summary>
+    /// <param name="tag"></param>
+    /// <returns></returns>
+    Task<Guid> AddAsync(Tag tag);
 }

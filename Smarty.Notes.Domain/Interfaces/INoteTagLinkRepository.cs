@@ -12,18 +12,18 @@ public interface INoteTagLinkRepository
     /// Provide possibility to async add link to storage
     /// </summary>
     /// <param name="tagId"></param>
-    /// <param name="notesId"></param>
+    /// <param name="noteId"></param>
     /// <returns></returns>
-    Task AddAsync(Guid tagId, Guid notesId);
+    Task AddAsync(Guid tagId, Guid noteId);
 
     /// <summary>
     /// Provide possibility to async delete link
     /// </summary>
     /// <param name="tagId"></param>
-    /// <param name="notesId"></param>
+    /// <param name="noteId"></param>
     /// <returns></returns>
     
-    Task DeleteAsync(Guid tagId, Guid notesId);
+    Task DeleteAsync(Guid tagId, Guid noteId);
 
     /// <summary>
     /// Return list of ids of Tags for note

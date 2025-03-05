@@ -23,8 +23,8 @@ public static partial class RepositoryHelper
                 });
 
         notesRepository
-                .Setup(f => f.IsExistAsync(It.IsAny<Guid>()))
-                .Returns((Guid id) => Task.FromResult(list.Any(f => f.Id == id)));
+                .Setup(f => f.GetAsync(It.IsAny<Guid>()))
+                .Returns((Guid id) => Task.FromResult(list.FirstOrDefault(f => f.Id == id)));
 
         notesRepository
                 .Setup(f => f.DeleteAsync(It.IsAny<Guid>()))

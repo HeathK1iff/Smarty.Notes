@@ -20,7 +20,7 @@ public interface INotesRepository
     /// </summary>
     /// <param name="id"></param>
     /// <returns>True if object is exist</returns>
-    Task<bool> IsExistAsync(Guid id); 
+    Task<Note?> GetAsync(Guid id); 
 
     /// <summary>
     /// Provide possibility to async delete note into storage

@@ -10,7 +10,7 @@ public interface ITagsRepository
     /// <summary>
     /// Return list of tag for note  
     /// </summary>
-    Task<IEnumerable<Tag>> GetAsync(Guid tagId);
+    Task<Tag?> GetAsync(Guid tagId);
 
     /// <summary>
     /// Provide existing of object in storage by Guid

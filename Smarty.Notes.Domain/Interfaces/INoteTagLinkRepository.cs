@@ -17,13 +17,6 @@ public interface INoteTagLinkRepository
     Task AddAsync(Guid tagId, Guid notesId);
 
     /// <summary>
-    /// Provide possility to check item into storage
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    Task<bool> IsExistAsync(Guid tagId, Guid notesId);
-    
-    /// <summary>
     /// Provide possibility to async delete link
     /// </summary>
     /// <param name="tagId"></param>

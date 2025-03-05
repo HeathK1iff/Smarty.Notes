@@ -25,10 +25,6 @@ public static partial class RepositoryHelper
                 return Task.CompletedTask;
             });
         
-        repository
-                .Setup(f => f.IsExistAsync(It.IsAny<Guid>(), It.IsAny<Guid>()))
-                .Returns((Guid tagId, Guid notesId) => Task.FromResult(list.Any(f => f.TagId == tagId && f.NoteId == notesId)));
-
         repository.Setup(m => m.DeleteAsync(It.IsAny<Guid>(), It.IsAny<Guid>()))
             .Returns((Guid tagId, Guid noteId) =>
             {

@@ -35,8 +35,12 @@ public class NoteService : INoteService
                 var linkIds = await _noteTagLinkRepository.GetAllForNoteAsync(item.Id);
                 foreach (var linkId in linkIds)
                 {
-                    IEnumerable<Tag> tags = await _tagsRepository.GetAsync(linkId);
-                    item.Tags = new Tags() { tags.Select(f => f.Name).ToArray() };
+                    Tag? tag = await _tagsRepository.GetAsync(linkId);
+                    
+                    if (tag is null)
+                      continue;
+
+                    item.Tags.Add(tag.Name);
                 }
             });
 

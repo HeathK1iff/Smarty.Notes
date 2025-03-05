@@ -83,6 +83,11 @@ public class NotesServiceTest
         var actual = JsonSerializer.Serialize(await target.GetNotesForUserAsync(_noteForTest.CreatedBy));
 
         Assert.That(actual, Is.EqualTo(expected));
+    }
+    
+    [TestCase]
+    public async Task AddAsync_PutNullValue_ArgumentNullException()
+    {
 
     }
 }

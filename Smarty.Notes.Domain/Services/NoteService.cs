@@ -1,4 +1,3 @@
-using System.Net.Http.Headers;
 using System.Transactions;
 using AutoMapper;
 using Smarty.Notes.Domain.Entities.Aggregates;

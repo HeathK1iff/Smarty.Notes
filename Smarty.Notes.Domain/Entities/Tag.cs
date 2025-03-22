@@ -1,6 +1,4 @@
-using Smarty.Notes.Domain.Interfaces;
-
-namespace Smarty.Notes.Entities;
+namespace Smarty.Notes.Domain.Entities;
 
 /// <summary>
 /// Class of tag entity
@@ -11,6 +9,4 @@ public sealed class Tag : EntityBase
     /// Name of tag  
     /// </summary>
     public required string Name { get; set; }
-
-    public DateTime Created { get; set; }
 }

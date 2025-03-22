@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smarty.Notes.Infrastructure
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smarty.Notes.Domain.Tests", "Smarty.Notes.Domain.Tests\Smarty.Notes.Domain.Tests.csproj", "{538D2532-CA55-462C-9C0C-92464D999D00}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smarty.Notes.Application", "Smarty.Notes.Application\Smarty.Notes.Application.csproj", "{8D303B1C-CFEE-481D-AEA5-95757B9CBF44}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{538D2532-CA55-462C-9C0C-92464D999D00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{538D2532-CA55-462C-9C0C-92464D999D00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{538D2532-CA55-462C-9C0C-92464D999D00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D303B1C-CFEE-481D-AEA5-95757B9CBF44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D303B1C-CFEE-481D-AEA5-95757B9CBF44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D303B1C-CFEE-481D-AEA5-95757B9CBF44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D303B1C-CFEE-481D-AEA5-95757B9CBF44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

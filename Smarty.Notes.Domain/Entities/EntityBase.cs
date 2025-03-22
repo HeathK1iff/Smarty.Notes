@@ -1,4 +1,4 @@
-namespace Smarty.Notes.Domain.Interfaces;
+namespace Smarty.Notes.Domain.Entities;
 
 /// <summary>
 /// Base class of entity

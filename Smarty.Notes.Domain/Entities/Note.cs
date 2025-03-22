@@ -1,25 +1,31 @@
+using Smarty.Notes.Domain.Collections;
 using Smarty.Notes.Domain.Interfaces;
 
-namespace Smarty.Notes.Entities;
+namespace Smarty.Notes.Domain.Entities;
 
 /// <summary>
-/// Class of note entity 
+/// Complex aggregate that contains note 
 /// </summary>
-public sealed class Note : EntityBase
-{ 
+public sealed class Note : EntityBase, IAggregateRoot
+{
     /// <summary>
     /// Content of note
     /// </summary>
-    public string Content { get; set; } = null!;
- 
+    public string? Content { get; set; }
+
     /// <summary>
-    ///  Date of create of record 
+    /// List of tags
     /// </summary>
-    public DateTime Created { get; set; }    
-    
+    /// <returns></returns>
+    public Tags Tags { get; init; } = new();
+
+    /// <summary>
+    /// Date of create of record 
+    /// </summary>
+    public DateTime Created { get; set; }
+
     /// <summary>
     /// Id of user who created it 
     /// </summary>
     public Guid CreatedBy { get; set; }
 }
-

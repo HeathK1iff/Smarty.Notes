@@ -1,6 +1,4 @@
-using Smarty.Notes.Domain.Interfaces;
-
-namespace Smarty.Notes.Entities;
+namespace Smarty.Notes.Domain.Entities;
 
 /// <summary>
 /// Class of user entity

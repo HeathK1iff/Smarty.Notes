@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework.Internal;
-using Smarty.Notes.Domain.Entities.Aggregates;
+using Smarty.Notes.Domain.Collections;
 using Smarty.Notes.Domain.Exceptions;
 
 namespace Smarty.Notes.Domain.Tests;
@@ -16,10 +16,7 @@ public class TagsTests
     [TestCase]
     public void Add_AlreadyExistTag_ResultThrowAlreadyExistException()
     {
-        var actual = new Tags()
-        {
-            "test"
-        };
+        var actual = new Tags(new[]{"test"});
 
         Assert.Throws<DuplicateException>(() => actual.Add("test"));
     }
@@ -37,7 +34,7 @@ public class TagsTests
     public void Add_AddValueInEmptyList_ResultSuccess()
     {
         var actual = new Tags();
-        var expected = new Tags() { "test" };
+        var expected = new Tags(new[] { "test" }) ;
 
         actual.Add("test");
 
@@ -48,7 +45,7 @@ public class TagsTests
     public void Add_AddMultiplySeqValueInEmptyList_ResultSuccess()
     {
         var actual = new Tags();
-        var expected = new Tags() { "test", "test1" };
+        var expected = new Tags(new[] { "test", "test1" });
 
         actual.Add("test");
         actual.Add("test1");
@@ -59,7 +56,7 @@ public class TagsTests
     [TestCase]
     public void Remove_TryNotExistingItem_ResultThrowNotFoundException()
     {
-        var actual = new Tags() { "test" };
+        var actual = new Tags(new[] { "test" });
 
         Assert.Throws<NotFoundException>(() => actual.Remove("test2"));
     }

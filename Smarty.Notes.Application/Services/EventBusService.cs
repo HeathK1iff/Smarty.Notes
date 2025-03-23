@@ -10,13 +10,17 @@ using Smarty.Notes.Infrastructure.Exceptions;
 
 public class EventBusService : BackgroundService
 {
-    IServiceProvider _serviceProvider;
-    IEventBusChannelFactory _eventBusConnection;
+    readonly IServiceProvider _serviceProvider;
+    readonly IEventBusChannelFactory _eventBusConnection;
+    readonly ICurrentContext _currentContext;
 
-    public EventBusService(IEventBusChannelFactory eventBusConnection, IServiceProvider serviceProvider)
+    public EventBusService(IEventBusChannelFactory eventBusConnection, ICurrentContext currentContext, IServiceProvider serviceProvider)
     {
         _eventBusConnection = eventBusConnection ?? throw new ArgumentNullException(nameof(eventBusConnection));
         _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
+        _currentContext = currentContext ?? throw new ArgumentNullException(nameof(currentContext));
+
+        _currentContext.GetInstanceId();
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)

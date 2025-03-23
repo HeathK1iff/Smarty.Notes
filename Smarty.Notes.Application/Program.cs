@@ -8,6 +8,8 @@ using Smarty.Notes.Infrastructure.Mappings;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.AddJsonFile(Path.Combine(AppContext.BaseDirectory, "appsettings.json"));
+
 builder.Services.AddSingleton<IEventBusChannelFactory, EventBusChannelFactory>();
 builder.Services.AddScoped<IEventPublisher, EventPublisher>();
 builder.Services.AddScoped<INoteRepository, NoteRepository>();
